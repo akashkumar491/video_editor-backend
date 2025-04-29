@@ -11,6 +11,10 @@ ffmpeg.setFfprobePath(ffprobePath);
 const prisma = new PrismaClient();
 
 exports.upload = async (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: "No file uploaded or invalid format(only .mp4 and .mov files are allowed)" });
+  }
+
   const { filename, size, path: filePath } = req.file;
   const videoPath = path.join("uploads", filename);
 
